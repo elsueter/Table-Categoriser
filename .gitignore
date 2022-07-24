@@ -1,1 +1,10 @@
 __pychache__
+__pychache__/*
+src/__pychache__
+src/__pychache__/*
+*.docx
+src/__pycache__/writer.cpython-38.pyc
+src/__pycache__/reader.cpython-38.pyc
+__pycache__/writer.cpython-38.pyc
+__pycache__/reader.cpython-38.pyc
+output.zip

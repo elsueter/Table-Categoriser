@@ -14,23 +14,23 @@ class TableStructure:
 
 
 class Tables:
-    categories = [
-        TableStructure("Triggers"),
-        TableStructure("Blocks"),
-        TableStructure("Therapist Shame"),
-        TableStructure("with Shame"),
-        TableStructure("Qualities of Therapist"),
-        TableStructure("Other")
-    ]
+    categories = []
+
+    def set_categories(self, input_categories):
+        for category in input_categories:
+            self.categories.append(TableStructure(category))
 
     def push(self, input_category, input_array):
         hit = False
         for category in self.categories:
-            if category.name.lower() in input_category.lower():
+            input_category = input_category.replace(" ", "")
+            input_category = input_category.replace("-", "")
+            input_category = input_category.lower()
+            if category.name in input_category:
                 category.push(input_array)
                 hit = True
         if not hit:
-            self.categories[5].push(input_array)
+            print(input_category)
 
     def print(self, input_category):
         print(f"Printing {input_category}:\n")
@@ -46,12 +46,22 @@ def read_contents(document_name):
 
     document_table = Tables()
 
+    temp_codes = word_doc.tables[0].rows[0].cells[0].text
+    temp_codes = temp_codes.replace(" ", "")
+    temp_codes = temp_codes.replace("-", "")
+    temp_codes = temp_codes.lower()
+
+    codes = temp_codes.split("\n")
+
+    codes.remove("codes")
+
+    document_table.set_categories(codes)
+
     for table in word_doc.tables:
         for row in table.rows:
             temp_array = []
             for cell in row.cells:
                 temp_array.append(cell.text)
-            document_table.push(temp_array[2], temp_array)
-
+            document_table.push(temp_array[0], temp_array)
 
     return document_table

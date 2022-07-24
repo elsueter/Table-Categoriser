@@ -1,8 +1,16 @@
-import writer, reader, os
+import src.writer as writer
+import src.reader as reader
+import os
 
-table_001 = reader.read_contents("001.docx")
+dir_string = "input"
 
-table_001 = merge_tables(table_001, table_002);
+directory = os.fsencode(dir_string)
 
-for category in table_001.categories:
+for file in os.listdir(directory):
+    filename = os.fsdecode(file)
+    table = reader.read_contents(f"{dir_string}/{filename}")
+
+for category in table.categories:
     writer.write(f"output/{category.name}.docx", f"{category.name}", category.contents)
+
+os.rename("output/.docx", "output/original.docx")
